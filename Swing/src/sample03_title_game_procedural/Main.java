@@ -201,7 +201,7 @@ public class Main extends JFrame implements KeyListener {
 				if(sum == 0) {
 					cardPanel.makeCardList(cardPanel.TOTAL_CARD);
 					for(int i=0; i<cardPanel.cardButtons.length; i++) {
-						String buttonText = "Card"+(i+1); 
+						String buttonText = ""+i; 
 						cardPanel.cardButtons[i].setText(buttonText);
 						cardPanel.cardButtons[i].setFont(new Font("ＭＳ ゴシック", Font.BOLD, 20));
 						cardPanel.cardButtons[i].setEnabled(true);

@@ -1,5 +1,6 @@
 package sample03_title_game_procedural;
 
+import java.awt.Color;
 import java.awt.Font;
 import java.awt.GridLayout;
 import java.awt.event.ActionEvent;
@@ -7,24 +8,25 @@ import java.awt.event.ActionListener;
 import java.util.ArrayList;
 import java.util.Collections;
 
+import javax.swing.ImageIcon;
 import javax.swing.JButton;
 import javax.swing.JPanel;
 
 public class CardPanel extends JPanel {
 	GameButtonListener gameButtonListener = new GameButtonListener();
 	GridLayout cardLayout = new GridLayout(2, 5, 20, 20);
-
+	Font font = new Font("ＭＳ ゴシック", Font.BOLD, 10);
 	JButton[] cardButtons = {
-			new JButton("Card1"),
-			new JButton("Card2"),
-			new JButton("Card3"),
-			new JButton("Card4"),
-			new JButton("Card5"),
-			new JButton("Card6"),
-			new JButton("Card7"),
-			new JButton("Card8"),
-			new JButton("Card9"),
-			new JButton("Card10")		
+			new JButton("0"),
+			new JButton("1"),
+			new JButton("2"),
+			new JButton("3"),
+			new JButton("4"),
+			new JButton("5"),
+			new JButton("6"),
+			new JButton("7"),
+			new JButton("8"),
+			new JButton("9")		
 	};
 	int[] cardSwitch = {1,1,1,1,1,1,1,1,1,1};
 	int cardNum1;
@@ -33,7 +35,7 @@ public class CardPanel extends JPanel {
 	int placeNum2;
 	String buttonText1;
 	String buttonText2;
-//	ImageIcon icon = new ImageIcon(getClass().getClassLoader().getResource("torannpu-illust02.png"));
+	ImageIcon icon = new ImageIcon(getClass().getClassLoader().getResource("back.png"));
 
 	ArrayList<Integer> cardList = new ArrayList<Integer>();
 	final int TOTAL_CARD = 10;
@@ -47,15 +49,13 @@ public class CardPanel extends JPanel {
 
 		for(JButton card : cardButtons) {
 			this.add(card);
-			card.setFont(new Font("ＭＳ ゴシック", Font.BOLD, 20));
+			card.setFont(font);
 			card.addActionListener(gameButtonListener);
+//		    card.setForeground(Color.WHITE);
+		    card.setBackground(Color.WHITE);
+		    card.setBorderPainted(false);
 		}
-//		cardButtons[0].setIcon(icon);
-//	    int iconHeight = icon.getIconHeight();
-//	    int iconWidth = icon.getIconWidth();
-//	    cardButtons[1].setText(iconWidth + "×" + iconHeight);
-
-	
+		cardButtons[0].setIcon(icon);
 	}
 
 	public class GameButtonListener implements ActionListener {
@@ -64,33 +64,6 @@ public class CardPanel extends JPanel {
 			String command = e.getActionCommand();
 			System.out.printf("command : %s%n", command);
 			openCard(command);
-			//			if (command.equals("Card1")) {
-//				int placeNum = Integer.valueOf(command.replaceAll("[^0-9]",""))-1;
-//				String cardNum = ""+cardList.get(placeNum);
-//				cardButtons[placeNum].setText(cardNum);
-//				cardButtons[placeNum].setFont(new Font("ＭＳ ゴシック", Font.BOLD, 100));
-//				if (returnCounter == 0) {
-//					cardNum1 = cardList.get(placeNum);
-//					placeNum1 = placeNum;
-//					returnCounter = 1;
-//				} else if (returnCounter == 1) {
-//					cardNum2 = cardList.get(placeNum);
-//					placeNum2 = placeNum;
-//					returnCounter = 0;
-//					if(cardNum1 == cardNum2) {
-//						cardButtons[placeNum1].setText("クリア");
-//						cardButtons[placeNum2].setText("クリア");
-//						cardSwitch[placeNum1] = 0;
-//						cardSwitch[placeNum2] = 0;
-//					}else {
-//						String buttonNum1 = ""+placeNum1; 
-//						String buttonNum2 = ""+placeNum2; 
-//						try {
-//							Thread.sleep(5000);
-//						}catch (InterruptedException event) {
-//						}
-//						cardButtons[placeNum1].setText(buttonNum1);
-//						cardButtons[placeNum2].setText(buttonNum2);
 //					}
 //					
 //				}
@@ -99,7 +72,7 @@ public class CardPanel extends JPanel {
 
 	}
 	public void openCard(String command) {
-		int placeNum = Integer.valueOf(command.replaceAll("[^0-9]",""))-1;
+		int placeNum = Integer.valueOf(command.replaceAll("[^0-9]",""));
 		System.out.printf("placeNum : %d%n",placeNum);
 		String cardNum = ""+cardList.get(placeNum);
 		if (returnCounter == 0) {
@@ -108,19 +81,19 @@ public class CardPanel extends JPanel {
 			cardNum1 = cardList.get(placeNum);
 			placeNum1 = placeNum;
 			returnCounter = 1;
-			System.out.printf("%d%n",returnCounter);
+			System.out.printf("ひっくり返した枚数 : %d%n",returnCounter);
 		} else if (returnCounter == 1) {
 			cardButtons[placeNum].setText(cardNum);
 			cardButtons[placeNum].setFont(new Font("ＭＳ ゴシック", Font.BOLD, 100));
 			cardNum2 = cardList.get(placeNum);
 			placeNum2 = placeNum;
 			returnCounter = 2;
-			System.out.printf("%d%n",returnCounter);
+			System.out.printf("ひっくり返した枚数 : %d%n",returnCounter);
 			if(cardNum1 == cardNum2) {
 				cardButtons[placeNum1].setText("クリア");
 				cardButtons[placeNum2].setText("クリア");
-				cardButtons[placeNum1].setFont(new Font("ＭＳ ゴシック", Font.BOLD, 20));
-				cardButtons[placeNum2].setFont(new Font("ＭＳ ゴシック", Font.BOLD, 20));
+				cardButtons[placeNum1].setFont(font);
+				cardButtons[placeNum2].setFont(font);
 				cardButtons[placeNum1].setEnabled(false);
 				cardButtons[placeNum2].setEnabled(false);
 				cardSwitch[placeNum1] = 0;
@@ -132,8 +105,8 @@ public class CardPanel extends JPanel {
 				System.out.printf("%n");
 				System.out.printf("%d%n",returnCounter);
 			}else {
-				buttonText1 = "Card"+(placeNum1+1); 
-				buttonText2 = "Card"+(placeNum2+1); 
+				buttonText1 = ""+(placeNum1); 
+				buttonText2 = ""+(placeNum2); 
 
 			}
 			
