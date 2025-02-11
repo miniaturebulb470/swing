@@ -30,8 +30,8 @@ public class MainWindow extends JFrame {
 		//いつもの
 		this.setDefaultCloseOperation(EXIT_ON_CLOSE);              //右上の「×」でウィンドウを閉じる設定
 		this.setResizable(false);                                  //画面サイズの変更を禁止
-		this.getContentPane().setBackground(Color.GREEN);          // 背景の色
-		//this.getContentPane().setBackground(new Color(0xF6F6F6));//細かく設定する場合はこちら
+//		this.getContentPane().setBackground(Color.GREEN);          // 背景の色
+		this.getContentPane().setBackground(new Color(0x008000));//細かく設定する場合はこちら
 		this.setLayout(layout);                                    //紙芝居のようなレイアウトを設定する
 		this.setPreferredSize(new Dimension(WIDTH,HEIGHT));        //サイズ設定
 		this.pack();                                               //自動サイズ調整（これがないと変なサイズになる）

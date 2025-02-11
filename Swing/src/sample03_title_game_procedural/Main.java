@@ -25,12 +25,13 @@ public class Main extends JFrame implements KeyListener {
 	JLabel start;
 	JLabel exit;
 	JLabel select = new JLabel();
-
+	Color backColor = new Color(0x008000);
 	
 	BorderLayout gameLayout = new BorderLayout();
 	JPanel gamePanel = new JPanel();
 	JPanel menuPanel = new JPanel();
 	CardPanel cardPanel = new CardPanel();
+	Font cardFont = new Font("ＭＳ ゴシック", Font.BOLD, 10);
 
 	JButton cardReturnButton;
 	JButton cardResetButton;
@@ -48,7 +49,7 @@ public class Main extends JFrame implements KeyListener {
 
 		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE); //右上の「×」でウィンドウを閉じる設定
 		setLayout(layout);
-		setPreferredSize(new Dimension(800, 600)); //サイズ設定
+		setPreferredSize(new Dimension(1000, 700)); //サイズ設定
 		pack(); //自動サイズ調整（これがないと変なサイズになる）
 		
 
@@ -63,7 +64,8 @@ public class Main extends JFrame implements KeyListener {
 		menuItem1_2.addActionListener(titleButtonListener);
 
 		titlePanel.setLayout(null);
-		titlePanel.setBackground(Color.GRAY);
+//		titlePanel.setBackground(Color.GRAY);
+		titlePanel.setBackground(backColor);
 		add(titlePanel, "タイトル画面");
 
 		start = new JLabel();
@@ -85,16 +87,16 @@ public class Main extends JFrame implements KeyListener {
 		select.setBounds(50, 107, 30, 30); //位置とサイズを設定
 
 		gamePanel.setLayout(null);
-		gamePanel.setBackground(Color.DARK_GRAY);
+		gamePanel.setBackground(backColor);
 		add(gamePanel, "ゲーム画面");
 
-		JLabel gameLabel = new JLabel();
-		gameLabel.setText("GAME");
-		gameLabel.setFont(new Font("MS 明朝", Font.BOLD, 40));
-		gameLabel.setBounds(100, 100, 150, 45);
+//		JLabel gameLabel = new JLabel();
+//		gameLabel.setText("GAME");
+//		gameLabel.setFont(new Font("MS 明朝", Font.BOLD, 40));
+//		gameLabel.setBounds(100, 100, 150, 45);
 
 		menuPanel.setPreferredSize(new Dimension(100, 40));
-		menuPanel.setBackground(Color.DARK_GRAY);
+		menuPanel.setBackground(backColor);
 		menuPanel.setLayout(null);
 
 		cardReturnButton = new JButton();
@@ -189,8 +191,8 @@ public class Main extends JFrame implements KeyListener {
 				if (cardPanel.returnCounter == 2) {
 					cardPanel.cardButtons[cardPanel.placeNum1].setText(cardPanel.buttonText1);
 					cardPanel.cardButtons[cardPanel.placeNum2].setText(cardPanel.buttonText2);
-					cardPanel.cardButtons[cardPanel.placeNum1].setFont(new Font("ＭＳ ゴシック", Font.BOLD, 20));
-					cardPanel.cardButtons[cardPanel.placeNum2].setFont(new Font("ＭＳ ゴシック", Font.BOLD, 20));
+					cardPanel.cardButtons[cardPanel.placeNum1].setFont(cardFont);
+					cardPanel.cardButtons[cardPanel.placeNum2].setFont(cardFont);
 					cardPanel.returnCounter = 0;
 				}
 			}else if(comand.equals("リセット")){
@@ -199,11 +201,11 @@ public class Main extends JFrame implements KeyListener {
 					sum += i;
 				}
 				if(sum == 0) {
-					cardPanel.makeCardList(cardPanel.TOTAL_CARD);
+					cardPanel.makeCardList();
 					for(int i=0; i<cardPanel.cardButtons.length; i++) {
 						String buttonText = ""+i; 
 						cardPanel.cardButtons[i].setText(buttonText);
-						cardPanel.cardButtons[i].setFont(new Font("ＭＳ ゴシック", Font.BOLD, 20));
+						cardPanel.cardButtons[i].setFont(cardFont);
 						cardPanel.cardButtons[i].setEnabled(true);
 
 						
