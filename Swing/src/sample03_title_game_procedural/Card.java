@@ -38,10 +38,10 @@ public class Card {
 			this.cardStatus[i] = 1;
 		}
 	}
-	public void swichStatusFacedUp(int placeNum) {
+	public void switchStatusFacedUp(int placeNum) {
 		this.cardStatus[placeNum] = 2;
 	}
-	public void swichStatusTurnedOver(int placeNum) {
+	public void switchStatusTurnedOver(int placeNum) {
 		this.cardStatus[placeNum] = 1;
 	}
 	public void switchStatusCollected(int placeNum) {
