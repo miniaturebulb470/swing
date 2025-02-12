@@ -118,7 +118,7 @@ public class Main extends JFrame implements KeyListener {
 		titlePanel.add(select);
 
 		gamePanel.setLayout(gameLayout);
-		menuPanel.add(cardReturnButton);
+		menuPanel.add(cardPanel.cardReturnButton);
 		menuPanel.add(cardResetButton);
 		gamePanel.add(menuPanel, BorderLayout.SOUTH);
 		gamePanel.add(cardPanel, BorderLayout.CENTER);
@@ -188,33 +188,7 @@ public class Main extends JFrame implements KeyListener {
 				titlePanel.requestFocus();
 			} else if (comand.equals("EXIT")) {
 				System.exit(0);
-			} else if (comand.equals("カードを裏に戻す")) {
-				if (cardPanel.returnCounter == 2) {
-					cardPanel.cardButtons[cardPanel.placeNum1].setText(cardPanel.buttonText1);
-					cardPanel.cardButtons[cardPanel.placeNum2].setText(cardPanel.buttonText2);
-					cardPanel.cardButtons[cardPanel.placeNum1].setFont(cardFont);
-					cardPanel.cardButtons[cardPanel.placeNum2].setFont(cardFont);
-					cardPanel.returnCounter = 0;
-				}
-			}else if(comand.equals("リセット")){
-				int sum = 0;
-				for(int i : cardPanel.cardSwitch) {
-					sum += i;
-				}
-				if(sum == 0) {
-					cardPanel.makeCardList();
-					for(int i=0; i<cardPanel.cardButtons.length; i++) {
-						String buttonText = ""+i; 
-						cardPanel.cardButtons[i].setText(buttonText);
-						cardPanel.cardButtons[i].setFont(cardFont);
-						cardPanel.cardButtons[i].setEnabled(true);
-
-						
-					}
-					cardPanel.returnCounter = 0;
-					
-				}
-			}
+			} 
 		}
 
 	}
