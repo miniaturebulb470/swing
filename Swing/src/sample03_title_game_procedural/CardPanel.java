@@ -93,7 +93,7 @@ public class CardPanel extends JPanel {
 			placeNum2 = placeNum;
 			card.printCardStatus();
 			System.out.printf("ひっくり返した枚数 : %d%n", card.countFacedUpCard());
-			if (card.compareFacedUpCards()) {
+			if (card.isSameNumber()) {
 				setDisableCard(placeNum1);
 				setDisableCard(placeNum2);
 				for (int swich : card.cardStatus) {

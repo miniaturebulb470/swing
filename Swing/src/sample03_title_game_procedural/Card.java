@@ -59,7 +59,7 @@ public class Card {
 		}
 		return counter;
 	}
-	public boolean compareFacedUpCards() {
+	public boolean isSameNumber() {
 		int cardNum1 = cardList.get(getIndexesOfStatus(2).get(0));
 		int cardNum2 = cardList.get(getIndexesOfStatus(2).get(1));
 		cardNum1 = changeNumberComparable(cardNum1);
