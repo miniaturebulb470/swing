@@ -49,7 +49,8 @@ public class Main extends JFrame implements KeyListener {
 
 		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE); //右上の「×」でウィンドウを閉じる設定
 		setLayout(layout);
-		setPreferredSize(new Dimension(990, 625)); //サイズ設定
+//		setPreferredSize(new Dimension(990, 625)); //サイズ設定
+		setPreferredSize(new Dimension(500, 300)); //サイズ設定
 		pack(); //自動サイズ調整（これがないと変なサイズになる）
 		
 
