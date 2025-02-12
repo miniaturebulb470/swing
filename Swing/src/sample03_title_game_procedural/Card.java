@@ -50,16 +50,16 @@ public class Card {
 	public int getCardNumber(int placeNum) {
 		return this.cardList.get(placeNum);
 	}
-	public int countFacedUpCard() {
+	public int countCardsWithSameStatus(int status) {
 		int counter = 0;
 		for(int i=0; i<this.cardStatus.length; i++) {
-			if(this.cardStatus[i] == 2) {
+			if(this.cardStatus[i] == status) {
 				counter++;
 			}
 		}
 		return counter;
 	}
-	public boolean isSameNumber() {
+	public boolean twoCardsIsSameNumber() {
 		int cardNum1 = cardList.get(getIndexesOfStatus(2).get(0));
 		int cardNum2 = cardList.get(getIndexesOfStatus(2).get(1));
 		cardNum1 = changeNumberComparable(cardNum1);
@@ -76,9 +76,7 @@ public class Card {
 		return indexesOfStatus;
 	}
 	public int changeNumberComparable(int number) {
-		if(number > 5) {
-			number = number - 5;
-		}
+			number = number % 5;
 		return number;
 	}
 

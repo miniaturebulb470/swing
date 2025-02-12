@@ -83,17 +83,17 @@ public class CardPanel extends JPanel {
 		System.out.printf("placeNum : %d%n", placeNum);
 		cardButtons[placeNum].setIcon(icons[card.getCardNumber(placeNum) - 1]);
 		card.switchStatusFacedUp(placeNum);
-		if (card.countFacedUpCard() == 1) {
+		if (card.countCardsWithSameStatus(2) == 1) {
 			setText(placeNum);
 			placeNum1 = placeNum;
 			card.printCardStatus();
-			System.out.printf("ひっくり返した枚数 : %d%n", card.countFacedUpCard());
-		} else if (card.countFacedUpCard() == 2) {
+			System.out.printf("ひっくり返した枚数 : %d%n", card.countCardsWithSameStatus(2));
+		} else if (card.countCardsWithSameStatus(2) == 2) {
 			setText(placeNum);
 			placeNum2 = placeNum;
 			card.printCardStatus();
-			System.out.printf("ひっくり返した枚数 : %d%n", card.countFacedUpCard());
-			if (card.isSameNumber()) {
+			System.out.printf("ひっくり返した枚数 : %d%n", card.countCardsWithSameStatus(2));
+			if (card.twoCardsIsSameNumber()) {
 				setDisableCard(placeNum1);
 				setDisableCard(placeNum2);
 				for (int swich : card.cardStatus) {
