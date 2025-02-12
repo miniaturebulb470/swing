@@ -60,14 +60,14 @@ public class Card {
 		return counter;
 	}
 	public boolean compareFacedUpCards() {
-		ArrayList<Integer> indexList = new ArrayList<Integer>();
+		ArrayList<Integer> indexOfStatus_2 = new ArrayList<Integer>();
 		for (int i=0; i<cardList.size(); i++) {
 			if(cardStatus[i] == 2) {
-				indexList.add(i);
+				indexOfStatus_2.add(i);
 			}
 		}
-		int cardNum1 = cardList.get(indexList.get(0));
-		int cardNum2 = cardList.get(indexList.get(1));
+		int cardNum1 = cardList.get(indexOfStatus_2.get(0));
+		int cardNum2 = cardList.get(indexOfStatus_2.get(1));
 		cardNum1 = changeNumberComparable(cardNum1);
 		cardNum2 = changeNumberComparable(cardNum2);
 		return cardNum1 == cardNum2; 
