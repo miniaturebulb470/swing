@@ -13,11 +13,13 @@ import javax.swing.JPanel;
 
 public class CardPanel extends JPanel {
 	GameButtonListener gameButtonListener = new GameButtonListener();
-	GridLayout cardLayout = new GridLayout(2, 5, 20, 20);
+	GridLayout cardLayout = new GridLayout(2, 5, 30, 30);
 	Color backColor = new Color(0x008000);
 	JButton cardReturnButton;
+	JButton cardResetButton;
 	Card card = new Card();
 	Font cardFont = new Font("consolas", Font.BOLD, 1);
+	Font buttonFont = new Font("メイリオ", Font.BOLD, 15);
 	JButton[] cardButtons = {
 			new JButton("0"),
 			new JButton("1"),
@@ -32,6 +34,7 @@ public class CardPanel extends JPanel {
 	};
 	int placeNum1;
 	int placeNum2;
+	int counter1 = 0;
 	ImageIcon backIcon = new ImageIcon(getClass().getClassLoader().getResource("back.png"));
 	ImageIcon disabledIcon = new ImageIcon(getClass().getClassLoader().getResource("feild.png"));
 
@@ -51,9 +54,17 @@ public class CardPanel extends JPanel {
 	public CardPanel() {
 		cardReturnButton = new JButton();
 		cardReturnButton.setText("カードを裏に戻す");
-		cardReturnButton.setBounds(50, 5, 180, 30);
+		cardReturnButton.setBounds(50, 0, 180, 30);
+		cardReturnButton.setFont(buttonFont);
 		cardReturnButton.setFocusable(false);
 		cardReturnButton.addActionListener(gameButtonListener);
+
+		cardResetButton = new JButton();
+		cardResetButton.setText("リセット");
+		cardResetButton.setBounds(400, 0, 180, 30);
+		cardResetButton.setFont(buttonFont);
+		cardResetButton.setFocusable(false);
+		cardResetButton.addActionListener(gameButtonListener);
 
 		this.setLayout(cardLayout);
 		this.setBackground(backColor);
@@ -75,7 +86,6 @@ public class CardPanel extends JPanel {
 		@Override
 		public void actionPerformed(ActionEvent e) {
 			String command = e.getActionCommand();
-			System.out.printf("command : %s%n", command);
 			if (command.matches("^[0-9]")) {
 				openCard(command);
 			} else if (command.equals("カードを裏に戻す")) {
@@ -88,8 +98,7 @@ public class CardPanel extends JPanel {
 					card.switchStatusTurnedOver(placeNum2);
 				}
 			}else if(command.equals("リセット")){
-				if(card.countCardsWithSameStatus(0) == 0) {
-					card.makeCardList();
+				if(card.countCardsWithSameStatus(0) == 10) {
 					Collections.shuffle(card.cardList);
 					card.initCardStatus();
 					card.printCardList();
@@ -105,17 +114,17 @@ public class CardPanel extends JPanel {
 
 	public void openCard(String command) {
 		int placeNum = Integer.valueOf(command.replaceAll("[^0-9]", ""));
-		System.out.printf("placeNum : %d%n", placeNum);
-		cardButtons[placeNum].setIcon(icons[card.getCardNumber(placeNum) - 1]);
-		card.switchStatusFacedUp(placeNum);
-		if (card.countCardsWithSameStatus(2) == 1) {
+		if (card.countCardsWithSameStatus(2) == 0) {
+			cardButtons[placeNum].setIcon(icons[card.getCardNumber(placeNum) - 1]);
+			card.switchStatusFacedUp(placeNum);
 			placeNum1 = placeNum;
 			card.printCardStatus();
-			System.out.printf("ひっくり返した枚数 : %d%n", card.countCardsWithSameStatus(2));
-		} else if (card.countCardsWithSameStatus(2) == 2) {
+		} else if (card.countCardsWithSameStatus(2) == 1) {
+			cardButtons[placeNum].setIcon(icons[card.getCardNumber(placeNum) - 1]);
+			card.switchStatusFacedUp(placeNum);
 			placeNum2 = placeNum;
 			card.printCardStatus();
-			System.out.printf("ひっくり返した枚数 : %d%n", card.countCardsWithSameStatus(2));
+			counter1++;
 			if (card.twoCardsIsSameNumber()) {
 				setDisableCard(placeNum1);
 				setDisableCard(placeNum2);
@@ -123,26 +132,16 @@ public class CardPanel extends JPanel {
 					System.out.printf("%d ", swich);
 				}
 				System.out.printf("%n");
-			} else {
-
-			}
+			} 
 
 		}
 
 	}
 
 	public void setDisableCard(int placeNum) {
-//		cardButtons[placeNum].setText("クリア");
-//		cardButtons[placeNum].setFont(cardFont);
 		cardButtons[placeNum].setEnabled(false);
 		cardButtons[placeNum].setDisabledIcon(disabledIcon);
 		card.switchStatusCollected(placeNum);
 	}
 
-	public void setText(int placeNum) {
-		cardButtons[placeNum].setText("a");
-		cardButtons[placeNum].setFont(cardFont);
-		cardButtons[placeNum].setHorizontalTextPosition(JButton.CENTER);
-		cardButtons[placeNum].setVerticalTextPosition(JButton.BOTTOM);
-	}
 }

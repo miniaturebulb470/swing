@@ -49,8 +49,8 @@ public class Main extends JFrame implements KeyListener {
 
 		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE); //右上の「×」でウィンドウを閉じる設定
 		setLayout(layout);
-//		setPreferredSize(new Dimension(990, 625)); //サイズ設定
-		setPreferredSize(new Dimension(500, 300)); //サイズ設定
+		setPreferredSize(new Dimension(990, 625)); //サイズ設定
+		setLocation(300, 100);
 		pack(); //自動サイズ調整（これがないと変なサイズになる）
 		
 
@@ -65,7 +65,6 @@ public class Main extends JFrame implements KeyListener {
 		menuItem1_2.addActionListener(titleButtonListener);
 
 		titlePanel.setLayout(null);
-//		titlePanel.setBackground(Color.GRAY);
 		titlePanel.setBackground(backColor);
 		add(titlePanel, "タイトル画面");
 
@@ -91,26 +90,10 @@ public class Main extends JFrame implements KeyListener {
 		gamePanel.setBackground(backColor);
 		add(gamePanel, "ゲーム画面");
 
-//		JLabel gameLabel = new JLabel();
-//		gameLabel.setText("GAME");
-//		gameLabel.setFont(new Font("MS 明朝", Font.BOLD, 40));
-//		gameLabel.setBounds(100, 100, 150, 45);
-
 		menuPanel.setPreferredSize(new Dimension(100, 40));
 		menuPanel.setBackground(backColor);
 		menuPanel.setLayout(null);
 
-		cardReturnButton = new JButton();
-		cardReturnButton.setText("カードを裏に戻す");
-		cardReturnButton.setBounds(250, 5, 180, 30);
-		cardReturnButton.setFocusable(false);
-		cardReturnButton.addActionListener(titleButtonListener);
-
-		cardResetButton = new JButton();
-		cardResetButton.setText("リセット");
-		cardResetButton.setBounds(500, 5, 180, 30);
-		cardResetButton.setFocusable(false);
-		cardResetButton.addActionListener(titleButtonListener);
 
 		titlePanel.setLayout(null);
 		titlePanel.add(start);
@@ -119,7 +102,7 @@ public class Main extends JFrame implements KeyListener {
 
 		gamePanel.setLayout(gameLayout);
 		menuPanel.add(cardPanel.cardReturnButton);
-		menuPanel.add(cardResetButton);
+		menuPanel.add(cardPanel.cardResetButton);
 		gamePanel.add(menuPanel, BorderLayout.SOUTH);
 		gamePanel.add(cardPanel, BorderLayout.CENTER);
 		pack();
