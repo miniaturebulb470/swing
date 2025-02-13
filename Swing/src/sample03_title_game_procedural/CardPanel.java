@@ -34,7 +34,6 @@ public class CardPanel extends JPanel {
 	};
 	int placeNum1;
 	int placeNum2;
-	int counter1 = 0;
 	ImageIcon backIcon = new ImageIcon(getClass().getClassLoader().getResource("back.png"));
 	ImageIcon disabledIcon = new ImageIcon(getClass().getClassLoader().getResource("feild.png"));
 
@@ -124,7 +123,6 @@ public class CardPanel extends JPanel {
 			card.switchStatusFacedUp(placeNum);
 			placeNum2 = placeNum;
 			card.printCardStatus();
-			counter1++;
 			if (card.twoCardsIsSameNumber()) {
 				setDisableCard(placeNum1);
 				setDisableCard(placeNum2);
