@@ -11,21 +11,34 @@ import javax.swing.ImageIcon;
 import javax.swing.JButton;
 import javax.swing.JPanel;
 
-public class CardPanel extends JPanel {
+public class CardPanel52 extends JPanel {
 	GameButtonListener gameButtonListener = new GameButtonListener();
-	GridLayout cardLayout = new GridLayout(2, 5, 30, 30);
+	GridLayout cardLayout = new GridLayout(5, 2, 30, 30);
 	Color backColor = new Color(0x008000);
 	JButton cardReturnButton;
 	JButton cardResetButton;
 	Card card = new Card();
 	Font cardFont = new Font("consolas", Font.BOLD, 1);
 	Font buttonFont = new Font("メイリオ", Font.BOLD, 15);
-	JButton[] cardButtons = new JButton[10];
+	JButton[] cardButtons52 = new JButton[52]; 
+	JButton[] cardButtons = {
+			new JButton("0"),
+			new JButton("1"),
+			new JButton("2"),
+			new JButton("3"),
+			new JButton("4"),
+			new JButton("5"),
+			new JButton("6"),
+			new JButton("7"),
+			new JButton("8"),
+			new JButton("9"),
+			new JButton("10")
+	};
 	int placeNum1;
 	int placeNum2;
 	ImageIcon backIcon = new ImageIcon(getClass().getClassLoader().getResource("back.png"));
 	ImageIcon disabledIcon = new ImageIcon(getClass().getClassLoader().getResource("feild.png"));
-
+	
 	ImageIcon[] icons = {
 			new ImageIcon(getClass().getClassLoader().getResource("torannpu-illust01.png")),
 			new ImageIcon(getClass().getClassLoader().getResource("torannpu-illust02.png")),
@@ -39,11 +52,11 @@ public class CardPanel extends JPanel {
 			new ImageIcon(getClass().getClassLoader().getResource("torannpu-illust44.png"))
 	};
 
-	public CardPanel() {
-		for (int i = 0; i < 10; i++) {
-			String number = ""+i;
-			cardButtons[i] = new JButton(number);
+	public CardPanel52() {
+		for (int i=0; i<10; i++) {
+			 cardButtons52[i] = new JButton("i");
 		}
+		
 		cardReturnButton = new JButton();
 		cardReturnButton.setText("カードを裏に戻す");
 		cardReturnButton.setBounds(50, 0, 180, 30);
@@ -89,12 +102,12 @@ public class CardPanel extends JPanel {
 					card.switchStatusTurnedOver(placeNum1);
 					card.switchStatusTurnedOver(placeNum2);
 				}
-			} else if (command.equals("リセット")) {
-				if (card.countCardsWithSameStatus(0) == 10) {
+			}else if(command.equals("リセット")){
+				if(card.countCardsWithSameStatus(0) == 10) {
 					Collections.shuffle(card.cardList);
 					card.initCardStatus();
 					card.printCardList();
-					for (int i = 0; i < cardButtons.length; i++) {
+					for (int i=0; i<cardButtons.length; i++) {
 						cardButtons[i].setIcon(backIcon);
 						cardButtons[i].setEnabled(true);
 					}
@@ -123,7 +136,7 @@ public class CardPanel extends JPanel {
 					System.out.printf("%d ", swich);
 				}
 				System.out.printf("%n");
-			}
+			} 
 
 		}
 

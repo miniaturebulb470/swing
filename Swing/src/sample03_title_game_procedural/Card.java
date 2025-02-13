@@ -5,7 +5,7 @@ import java.util.Collections;
 
 public class Card {
 	ArrayList<Integer> cardList = new ArrayList<Integer>();
-	final int TOTAL_CARD = 10;
+	int TOTAL_CARD = 10;
 	int[] cardStatus = new int[TOTAL_CARD];
 	
 	
@@ -76,7 +76,12 @@ public class Card {
 		return indexesOfStatus;
 	}
 	public int changeNumberComparable(int number) {
+		if(TOTAL_CARD == 10) {
 			number = number % 5;
+		}
+		if(TOTAL_CARD == 52) {
+			number = number % 13;
+		}
 		return number;
 	}
 
