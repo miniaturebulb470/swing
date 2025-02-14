@@ -20,30 +20,24 @@ public class CardPanel extends JPanel {
 	Card card = new Card();
 	Font cardFont = new Font("consolas", Font.BOLD, 1);
 	Font buttonFont = new Font("メイリオ", Font.BOLD, 15);
-	JButton[] cardButtons = new JButton[10];
-	int placeNum1;
-	int placeNum2;
+	JButton[] cardButtons = new JButton[card.totalCardNumber];
+
 	ImageIcon backIcon = new ImageIcon(getClass().getClassLoader().getResource("back.png"));
 	ImageIcon disabledIcon = new ImageIcon(getClass().getClassLoader().getResource("feild.png"));
 
-	ImageIcon[] icons = {
-			new ImageIcon(getClass().getClassLoader().getResource("torannpu-illust01.png")),
-			new ImageIcon(getClass().getClassLoader().getResource("torannpu-illust02.png")),
-			new ImageIcon(getClass().getClassLoader().getResource("torannpu-illust03.png")),
-			new ImageIcon(getClass().getClassLoader().getResource("torannpu-illust04.png")),
-			new ImageIcon(getClass().getClassLoader().getResource("torannpu-illust05.png")),
-			new ImageIcon(getClass().getClassLoader().getResource("torannpu-illust40.png")),
-			new ImageIcon(getClass().getClassLoader().getResource("torannpu-illust41.png")),
-			new ImageIcon(getClass().getClassLoader().getResource("torannpu-illust42.png")),
-			new ImageIcon(getClass().getClassLoader().getResource("torannpu-illust43.png")),
-			new ImageIcon(getClass().getClassLoader().getResource("torannpu-illust44.png"))
-	};
+	ImageIcon[] icons = new ImageIcon[card.totalCardNumber];
 
 	public CardPanel() {
-		for (int i = 0; i < 10; i++) {
-			String number = ""+i;
+		for (int i = 0; i < card.totalCardNumber; i++) {
+			String number = "" + i;
 			cardButtons[i] = new JButton(number);
 		}
+
+		for (int i = 0; i < card.totalCardNumber; i++) {
+			String fileName = String.format("torannpu-illust%d.png", i + 1);
+			icons[i] = new ImageIcon(getClass().getClassLoader().getResource(fileName));
+		}
+
 		cardReturnButton = new JButton();
 		cardReturnButton.setText("カードを裏に戻す");
 		cardReturnButton.setBounds(50, 0, 180, 30);
@@ -82,15 +76,10 @@ public class CardPanel extends JPanel {
 				openCard(command);
 			} else if (command.equals("カードを裏に戻す")) {
 				if (card.countCardsWithSameStatus(2) == 2) {
-					placeNum1 = card.getIndexesOfStatus(2).get(0);
-					placeNum2 = card.getIndexesOfStatus(2).get(1);
-					cardButtons[placeNum1].setIcon(backIcon);
-					cardButtons[placeNum2].setIcon(backIcon);
-					card.switchStatusTurnedOver(placeNum1);
-					card.switchStatusTurnedOver(placeNum2);
+					turnOffCard();
 				}
 			} else if (command.equals("リセット")) {
-				if (card.countCardsWithSameStatus(0) == 10) {
+				if (card.countCardsWithSameStatus(0) == card.totalCardNumber) {
 					Collections.shuffle(card.cardList);
 					card.initCardStatus();
 					card.printCardList();
@@ -102,6 +91,15 @@ public class CardPanel extends JPanel {
 			}
 		}
 
+		public void turnOffCard() {
+			int placeNumA = card.getIndexesOfStatus(2).get(0);
+			int placeNumB = card.getIndexesOfStatus(2).get(1);
+			cardButtons[placeNumA].setIcon(backIcon);
+			cardButtons[placeNumB].setIcon(backIcon);
+			card.switchStatusTurnedOver(placeNumA);
+			card.switchStatusTurnedOver(placeNumB);
+		}
+
 	}
 
 	public void openCard(String command) {
@@ -109,16 +107,14 @@ public class CardPanel extends JPanel {
 		if (card.countCardsWithSameStatus(2) == 0) {
 			cardButtons[placeNum].setIcon(icons[card.getCardNumber(placeNum) - 1]);
 			card.switchStatusFacedUp(placeNum);
-			placeNum1 = placeNum;
 			card.printCardStatus();
 		} else if (card.countCardsWithSameStatus(2) == 1) {
 			cardButtons[placeNum].setIcon(icons[card.getCardNumber(placeNum) - 1]);
 			card.switchStatusFacedUp(placeNum);
-			placeNum2 = placeNum;
 			card.printCardStatus();
 			if (card.twoCardsIsSameNumber()) {
-				setDisableCard(placeNum1);
-				setDisableCard(placeNum2);
+				setDisableCard(card.getIndexesOfStatus(2).get(1));
+				setDisableCard(card.getIndexesOfStatus(2).get(0));
 				for (int swich : card.cardStatus) {
 					System.out.printf("%d ", swich);
 				}

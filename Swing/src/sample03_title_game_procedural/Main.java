@@ -47,7 +47,6 @@ public class Main extends JFrame implements KeyListener {
 
 	Main() {
 		getContentPane().setBackground(Color.GRAY);
-
 		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE); //右上の「×」でウィンドウを閉じる設定
 		setLayout(layout);
 		setPreferredSize(new Dimension(990, 625)); //サイズ設定

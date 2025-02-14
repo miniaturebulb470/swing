@@ -5,8 +5,8 @@ import java.util.Collections;
 
 public class Card {
 	ArrayList<Integer> cardList = new ArrayList<Integer>();
-	int TOTAL_CARD = 10;
-	int[] cardStatus = new int[TOTAL_CARD];
+	int totalCardNumber = 10;
+	int[] cardStatus = new int[totalCardNumber];
 	
 	
 	public Card() {
@@ -16,7 +16,7 @@ public class Card {
 		printCardList();
 	}
 	public void makeCardList() {
-		for (int i = 1; i <= this.TOTAL_CARD; i++) {
+		for (int i = 1; i <= this.totalCardNumber; i++) {
 			this.cardList.add(Integer.valueOf(i));
 		}
 	}
@@ -34,7 +34,7 @@ public class Card {
 		System.out.printf("%n");
 	}
 	public void initCardStatus() {
-		for(int i=0; i<TOTAL_CARD; i++) {
+		for(int i=0; i<totalCardNumber; i++) {
 			this.cardStatus[i] = 1;
 		}
 	}
@@ -76,10 +76,10 @@ public class Card {
 		return indexesOfStatus;
 	}
 	public int changeNumberComparable(int number) {
-		if(TOTAL_CARD == 10) {
+		if(totalCardNumber == 10) {
 			number = number % 5;
 		}
-		if(TOTAL_CARD == 52) {
+		if(totalCardNumber == 52) {
 			number = number % 13;
 		}
 		return number;
