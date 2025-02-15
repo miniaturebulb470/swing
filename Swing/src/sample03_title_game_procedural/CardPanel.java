@@ -1,4 +1,5 @@
 package sample03_title_game_procedural;
+
 //test
 import java.awt.Color;
 import java.awt.Font;
@@ -10,6 +11,7 @@ import java.util.Collections;
 import javax.swing.ImageIcon;
 import javax.swing.JButton;
 import javax.swing.JPanel;
+import javax.swing.Timer;
 
 public class CardPanel extends JPanel {
 	GameButtonListener gameButtonListener = new GameButtonListener();
@@ -69,6 +71,16 @@ public class CardPanel extends JPanel {
 	}
 
 	public class GameButtonListener implements ActionListener {
+		Timer timer;
+		int sec;
+
+		GameButtonListener() {
+			sec = 0;
+			timer = new Timer(1000, this);
+			timer.setActionCommand("timer");
+
+		}
+
 		@Override
 		public void actionPerformed(ActionEvent e) {
 			String command = e.getActionCommand();
@@ -88,6 +100,22 @@ public class CardPanel extends JPanel {
 						cardButtons[i].setEnabled(true);
 					}
 				}
+			}else if(command.equals("timer")) {
+				if(sec > 0) {
+					setDisableCard(card.getIndexesOfStatus(2).get(1));
+					setDisableCard(card.getIndexesOfStatus(2).get(0));
+					for (int swich : card.cardStatus) {
+						System.out.printf("%d ", swich);
+					}
+					System.out.printf("%n");
+					cardReturnButton.setEnabled(true);
+					cardResetButton.setEnabled(true);
+					timer.stop();
+					sec = 0;
+				}else {
+					sec++;
+				}
+				
 			}
 		}
 
@@ -100,29 +128,25 @@ public class CardPanel extends JPanel {
 			card.switchStatusTurnedOver(placeNumB);
 		}
 
-	}
-
-	public void openCard(String command) {
-		int placeNum = Integer.valueOf(command.replaceAll("[^0-9]", ""));
-		if (card.countCardsWithSameStatus(2) == 0) {
-			cardButtons[placeNum].setIcon(icons[card.getCardNumber(placeNum) - 1]);
-			card.switchStatusFacedUp(placeNum);
-			card.printCardStatus();
-		} else if (card.countCardsWithSameStatus(2) == 1) {
-			cardButtons[placeNum].setIcon(icons[card.getCardNumber(placeNum) - 1]);
-			card.switchStatusFacedUp(placeNum);
-			card.printCardStatus();
-			if (card.twoCardsIsSameNumber()) {
-				setDisableCard(card.getIndexesOfStatus(2).get(1));
-				setDisableCard(card.getIndexesOfStatus(2).get(0));
-				for (int swich : card.cardStatus) {
-					System.out.printf("%d ", swich);
+		public void openCard(String command) {
+			int placeNum = Integer.valueOf(command.replaceAll("[^0-9]", ""));
+			if (card.countCardsWithSameStatus(2) == 0) {
+				cardButtons[placeNum].setIcon(icons[card.getCardNumber(placeNum) - 1]);
+				card.switchStatusFacedUp(placeNum);
+				card.printCardStatus();
+			} else if (card.countCardsWithSameStatus(2) == 1) {
+				cardButtons[placeNum].setIcon(icons[card.getCardNumber(placeNum) - 1]);
+				card.switchStatusFacedUp(placeNum);
+				card.printCardStatus();
+				if (card.twoCardsIsSameNumber()) {
+					cardReturnButton.setEnabled(false);
+					cardResetButton.setEnabled(false);
+					timer.start();
 				}
-				System.out.printf("%n");
+
 			}
 
 		}
-
 	}
 
 	public void setDisableCard(int placeNum) {
