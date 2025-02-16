@@ -103,6 +103,7 @@ public class Main extends JFrame implements KeyListener {
 		gamePanel.setLayout(gameLayout);
 		menuPanel.add(cardPanel.cardReturnButton);
 		menuPanel.add(cardPanel.cardResetButton);
+		menuPanel.add(cardPanel.gameFinish);
 		gamePanel.add(menuPanel, BorderLayout.SOUTH);
 		gamePanel.add(cardPanel, BorderLayout.CENTER);
 		pack();

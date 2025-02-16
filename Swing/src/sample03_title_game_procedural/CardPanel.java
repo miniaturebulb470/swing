@@ -10,7 +10,9 @@ import java.util.Collections;
 
 import javax.swing.ImageIcon;
 import javax.swing.JButton;
+import javax.swing.JLabel;
 import javax.swing.JPanel;
+import javax.swing.SwingConstants;
 import javax.swing.Timer;
 
 public class CardPanel extends JPanel {
@@ -19,15 +21,16 @@ public class CardPanel extends JPanel {
 	Color backColor = new Color(0x008000);
 	JButton cardReturnButton;
 	JButton cardResetButton;
+	JLabel gameFinish;
 	Card card = new Card();
 	Font cardFont = new Font("consolas", Font.BOLD, 1);
 	Font buttonFont = new Font("メイリオ", Font.BOLD, 15);
 	JButton[] cardButtons = new JButton[card.totalCardNumber];
+	ImageIcon[] icons = new ImageIcon[card.totalCardNumber];
 
 	ImageIcon backIcon = new ImageIcon(getClass().getClassLoader().getResource("back.png"));
 	ImageIcon disabledIcon = new ImageIcon(getClass().getClassLoader().getResource("feild.png"));
-
-	ImageIcon[] icons = new ImageIcon[card.totalCardNumber];
+	int countTurn = 0;
 
 	public CardPanel() {
 		for (int i = 0; i < card.totalCardNumber; i++) {
@@ -54,6 +57,14 @@ public class CardPanel extends JPanel {
 		cardResetButton.setFocusable(false);
 		cardResetButton.addActionListener(gameButtonListener);
 
+		gameFinish = new JLabel();
+		gameFinish.setText("");
+		gameFinish.setFont(buttonFont);
+		gameFinish.setHorizontalTextPosition(JLabel.CENTER);
+		gameFinish.setVerticalTextPosition(SwingConstants.BOTTOM);
+		gameFinish.setFocusable(false);
+		gameFinish.setBounds(250, 0, 110, 30); //位置とサイズを設定
+
 		this.setLayout(cardLayout);
 		this.setBackground(backColor);
 
@@ -76,11 +87,9 @@ public class CardPanel extends JPanel {
 
 		GameButtonListener() {
 			sec = 0;
-			timer = new Timer(1000, this);
-			timer.setActionCommand("timer");
-
+			timer = new Timer(300, this);
+			timer.setActionCommand("カード回収");
 		}
-
 		@Override
 		public void actionPerformed(ActionEvent e) {
 			String command = e.getActionCommand();
@@ -89,6 +98,7 @@ public class CardPanel extends JPanel {
 			} else if (command.equals("カードを裏に戻す")) {
 				if (card.countCardsWithSameStatus(2) == 2) {
 					turnOffCard();
+					countTurn++;
 				}
 			} else if (command.equals("リセット")) {
 				if (card.countCardsWithSameStatus(0) == card.totalCardNumber) {
@@ -100,8 +110,8 @@ public class CardPanel extends JPanel {
 						cardButtons[i].setEnabled(true);
 					}
 				}
-			}else if(command.equals("timer")) {
-				if(sec > 0) {
+			} else if (command.equals("カード回収")) {
+				if (sec > 0) {
 					setDisableCard(card.getIndexesOfStatus(2).get(1));
 					setDisableCard(card.getIndexesOfStatus(2).get(0));
 					for (int swich : card.cardStatus) {
@@ -112,10 +122,10 @@ public class CardPanel extends JPanel {
 					cardResetButton.setEnabled(true);
 					timer.stop();
 					sec = 0;
-				}else {
+				} else {
 					sec++;
 				}
-				
+
 			}
 		}
 
@@ -130,20 +140,15 @@ public class CardPanel extends JPanel {
 
 		public void openCard(String command) {
 			int placeNum = Integer.valueOf(command.replaceAll("[^0-9]", ""));
-			if (card.countCardsWithSameStatus(2) == 0) {
-				cardButtons[placeNum].setIcon(icons[card.getCardNumber(placeNum) - 1]);
-				card.switchStatusFacedUp(placeNum);
-				card.printCardStatus();
-			} else if (card.countCardsWithSameStatus(2) == 1) {
-				cardButtons[placeNum].setIcon(icons[card.getCardNumber(placeNum) - 1]);
-				card.switchStatusFacedUp(placeNum);
-				card.printCardStatus();
-				if (card.twoCardsIsSameNumber()) {
-					cardReturnButton.setEnabled(false);
-					cardResetButton.setEnabled(false);
-					timer.start();
-				}
-
+			int iconsIndex = card.getCardNumber(placeNum) - 1;
+			cardButtons[placeNum].setIcon(icons[iconsIndex]);
+			card.switchStatusFacedUp(placeNum);
+			card.printCardStatus();
+			if (card.countCardsWithSameStatus(2) == 2
+					&& card.twoCardsIsSameNumber()) {
+				cardReturnButton.setEnabled(false);
+				cardResetButton.setEnabled(false);
+				timer.start();
 			}
 
 		}
