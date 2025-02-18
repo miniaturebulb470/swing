@@ -34,12 +34,14 @@ public class CardPanel extends JPanel {
 
 	public CardPanel() {
 		if (card.totalCardNumber == 10) {
+//			backSideIcon = new ImageIcon(getClass().getClassLoader().getResource("back.png"));
 			cardLayout = new GridLayout(2, 5, 30, 30);
 			for (int i = 0; i < card.totalCardNumber; i++) {
-				String fileName = String.format("torannpu-illust%d.png", i + 1);
+				String fileName = String.format("torannpu-illus%d.png", i + 1);
 				cardIcons[i] = new ImageIcon(getClass().getClassLoader().getResource(fileName));
 			}
 		} else if (card.totalCardNumber == 52) {
+			backSideIcon = new ImageIcon(getClass().getClassLoader().getResource("back52.png"));
 			cardLayout = new GridLayout(5, 11, 30, 30);
 			for (int i = 0; i < card.totalCardNumber; i++) {
 				String fileName = String.format("torannpu-illust%d.png", i + 1);
@@ -104,7 +106,7 @@ public class CardPanel extends JPanel {
 		@Override
 		public void actionPerformed(ActionEvent e) {
 			String command = e.getActionCommand();
-			if (command.matches("^[0-9]")) {
+			if (command.matches("^[0-9].*") && card.countCardsWithSameStatus(2)!=2) {
 				openCard(command);
 			} else if (command.equals("カードを裏に戻す")) {
 				if (card.countCardsWithSameStatus(2) == 2) {
@@ -156,7 +158,8 @@ public class CardPanel extends JPanel {
 		}
 
 		public void openCard(String command) {
-			int placeNum = Integer.valueOf(command.replaceAll("[^0-9]", ""));
+			int placeNum = Integer.valueOf(command);
+			System.out.printf("カードの位置%d%n",placeNum);
 			int iconsIndex = card.getCardNumber(placeNum) - 1;
 			cardButtons[placeNum].setIcon(cardIcons[iconsIndex]);
 			card.switchStatusFacedUp(placeNum);

@@ -31,7 +31,6 @@ public class Main extends JFrame implements KeyListener {
 	JPanel gamePanel = new JPanel();
 	JPanel menuPanel = new JPanel();
 	CardPanel cardPanel = new CardPanel();
-//	CardPanel52 cardPanel52 = new CardPanel52();
 	Font cardFont = new Font("ＭＳ ゴシック", Font.BOLD, 10);
 
 	JButton cardReturnButton;
