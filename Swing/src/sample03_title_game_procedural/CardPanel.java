@@ -42,7 +42,7 @@ public class CardPanel extends JPanel {
 			}
 		} else if (card.totalCardNumber == 52) {
 			backSideIcon = new ImageIcon(getClass().getClassLoader().getResource("back52.png"));
-			cardLayout = new GridLayout(5, 11, 30, 30);
+			cardLayout = new GridLayout(5, 11, 5, 10);
 			for (int i = 0; i < card.totalCardNumber; i++) {
 				String fileName = String.format("torannpu-illust%d.png", i + 1);
 				cardIcons[i] = new ImageIcon(getClass().getClassLoader().getResource(fileName));
@@ -159,7 +159,6 @@ public class CardPanel extends JPanel {
 
 		public void openCard(String command) {
 			int placeNum = Integer.valueOf(command);
-			System.out.printf("カードの位置%d%n",placeNum);
 			int iconsIndex = card.getCardNumber(placeNum) - 1;
 			cardButtons[placeNum].setIcon(cardIcons[iconsIndex]);
 			card.switchStatusFacedUp(placeNum);
