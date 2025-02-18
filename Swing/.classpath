@@ -8,5 +8,6 @@
 	<classpathentry kind="src" path="src"/>
 	<classpathentry kind="src" path="iloveimg-resized"/>
 	<classpathentry kind="src" path="images"/>
+	<classpathentry kind="src" path="trumpCard52"/>
 	<classpathentry kind="output" path="bin"/>
 </classpath>
